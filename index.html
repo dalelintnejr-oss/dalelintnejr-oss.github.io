@@ -92,18 +92,58 @@ nav {
 /* ===== HERO ===== */
 .hero {
   background: linear-gradient(160deg, var(--sky-soft) 0%, #e8f4fb 30%, var(--cream) 70%);
-  padding: 2.5rem 2rem 0;
-  text-align: center;
   position: relative;
   overflow: hidden;
+  min-height: 420px;
+  display: flex;
+  align-items: stretch;
 }
 .hero::after {
   content: '';
   position: absolute;
   bottom: 0; left: 0; right: 0;
-  height: 60px;
+  height: 50px;
   background: var(--cream);
   clip-path: ellipse(55% 100% at 50% 100%);
+  z-index: 2;
+}
+.hero-char-left {
+  position: absolute;
+  bottom: 0; left: 0;
+  width: clamp(140px, 20vw, 260px);
+  z-index: 1;
+  display: flex;
+  align-items: flex-end;
+}
+.hero-char-left img {
+  width: 100%;
+  display: block;
+  filter: drop-shadow(4px 0 16px rgba(58,26,74,0.1));
+}
+.hero-char-right {
+  position: absolute;
+  bottom: 0; right: 0;
+  width: clamp(140px, 20vw, 260px);
+  z-index: 1;
+  display: flex;
+  align-items: flex-end;
+}
+.hero-char-right img {
+  width: 100%;
+  display: block;
+  filter: drop-shadow(-4px 0 16px rgba(58,26,74,0.1));
+}
+.hero-center {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 3rem clamp(150px, 21vw, 270px);
+  padding-bottom: 4.5rem;
+  position: relative;
+  z-index: 3;
 }
 .hero-eyebrow {
   font-family: 'Caveat', cursive;
@@ -115,7 +155,7 @@ nav {
 }
 .hero-title {
   font-family: 'Caveat', cursive;
-  font-size: clamp(2.4rem, 5vw, 3.4rem);
+  font-size: clamp(2rem, 4vw, 3.2rem);
   font-weight: 700;
   color: var(--deep-plum);
   line-height: 1.1;
@@ -124,60 +164,15 @@ nav {
 .hero-subtitle {
   font-family: 'Fraunces', serif;
   font-style: italic;
-  font-size: clamp(1rem, 2vw, 1.15rem);
+  font-size: clamp(0.95rem, 1.8vw, 1.1rem);
   color: var(--muted);
-  margin-bottom: 1.75rem;
-}
-.hero-banner {
-  position: relative;
-  max-width: 640px;
-  margin: 0 auto;
-  z-index: 1;
-}
-.hero-banner img {
-  width: 100%;
-  border-radius: 24px 24px 0 0;
-  filter: drop-shadow(0 8px 32px rgba(58,26,74,0.18));
-}
-.hero-bubble {
-  display: inline-block;
-  background: var(--warm-white);
-  border: 2.5px solid var(--gold);
-  border-radius: 18px 18px 18px 4px;
-  padding: 0.65rem 1.25rem;
-  font-family: 'Caveat', cursive;
-  font-size: 1.1rem;
-  color: var(--deep-plum);
-  box-shadow: 0 4px 16px rgba(58,26,74,0.12);
-  line-height: 1.35;
-  transform: rotate(-1deg);
-  margin-top: 0.85rem;
-  position: relative;
-  z-index: 2;
-}
-.hero-bubble::before {
-  content: '';
-  position: absolute;
-  top: -12px;
-  left: 2rem;
-  border: 6px solid transparent;
-  border-bottom-color: var(--gold);
-}
-.hero-bubble::after {
-  content: '';
-  position: absolute;
-  top: -8px;
-  left: calc(2rem + 1px);
-  border: 5px solid transparent;
-  border-bottom-color: var(--warm-white);
+  margin-bottom: 1.5rem;
+  max-width: 320px;
 }
 .hero-cta {
   display: flex;
-  gap: 1rem;
+  gap: 0.85rem;
   justify-content: center;
-  padding: 2rem 0 3.5rem;
-  position: relative;
-  z-index: 1;
   flex-wrap: wrap;
 }
 .btn {
@@ -584,8 +579,9 @@ footer a:hover { color: var(--gold-light); }
   .nav-links { display: none; flex-direction: column; gap: 0.75rem; }
   .nav-links.open { display: flex; position: absolute; top: 100%; left: 0; right: 0; background: var(--nav-bg); padding: 1rem 1.5rem; }
   .nav-toggle { display: flex; }
-  .hero { padding: 2rem 1.25rem 0; }
-  .hero-bubble { right: 0.25rem; font-size: 0.9rem; max-width: 150px; }
+  .hero { min-height: 320px; }
+  .hero-char-left, .hero-char-right { width: clamp(90px, 28vw, 140px); }
+  .hero-center { padding: 2rem clamp(95px, 29vw, 145px); padding-bottom: 4rem; }
   .section { padding: 2.5rem 1.25rem; }
   .book-spread { flex-direction: column; }
   .book-spine { width: 100%; height: 10px; background: linear-gradient(to bottom, #b8a88a, #e0d0b0, #b8a88a); }
@@ -612,22 +608,33 @@ footer a:hover { color: var(--gold-light); }
 
 <!-- HERO -->
 <section class="hero">
-  <p class="hero-eyebrow">✦ &nbsp; stories that shine &nbsp; ✦</p>
-  <h1 class="hero-title">Welcome to<br>Mimi &amp; DJ's World!</h1>
-  <p class="hero-subtitle">Picture books full of love, laughter, and a little magic</p>
-
-  <div class="hero-banner fade-up">
+  <!-- DJ on the left -->
+  <div class="hero-char-left">
     <img
-      src="https://drive.google.com/thumbnail?id=16e6A0gS9-5DI9Qrt3s5bpenca_-FcGlN&sz=w800"
-      alt="DJ and Mimi — your storytellers"
-      onerror="this.style.opacity='0'"
+      src="https://drive.google.com/thumbnail?id=1PIc_9-_VXd2iKgtI2ys36T6dLT5JUjVu&sz=w600"
+      alt="DJ"
+      onerror="this.style.display='none'"
     >
   </div>
-  <div class="hero-bubble">"We make books for little hearts! ✨"</div>
 
-  <div class="hero-cta">
-    <a href="#books" class="btn btn-primary">Explore Our Books</a>
-    <a href="#reader" class="btn btn-secondary">Read Along ›</a>
+  <!-- Content center -->
+  <div class="hero-center fade-up">
+    <p class="hero-eyebrow">✦ &nbsp; stories that shine &nbsp; ✦</p>
+    <h1 class="hero-title">Welcome to<br>Mimi &amp; DJ's World!</h1>
+    <p class="hero-subtitle">Picture books full of love, laughter, and a little magic</p>
+    <div class="hero-cta">
+      <a href="#books" class="btn btn-primary">Explore Our Books</a>
+      <a href="#reader" class="btn btn-secondary">Read Along ›</a>
+    </div>
+  </div>
+
+  <!-- Mimi on the right -->
+  <div class="hero-char-right">
+    <img
+      src="https://drive.google.com/thumbnail?id=1uVzTfyvOz6uUmizWqVV8WtsuxSlXWHZf&sz=w600"
+      alt="Mimi"
+      onerror="this.style.display='none'"
+    >
   </div>
 </section>
 
